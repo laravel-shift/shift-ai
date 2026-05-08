@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "laravel-shift",
-      "source": ".",
+      "source": "./",
       "commands": ".claude/commands",
       "description": "Analyze, run, and review Shift automation directly from Claude Code",
       "author": {
