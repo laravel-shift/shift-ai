@@ -1,0 +1,22 @@
+{
+  "name": "laravel-shift",
+  "description": "A set of Claude Code commands for automating the entire Shift process",
+  "owner": {
+    "name": "Jason McCreary"
+  },
+  "plugins": [
+    {
+      "name": "laravel-shift",
+      "source": ".",
+      "commands": ".claude/commands",
+      "description": "Analyze, run, and review Shift automation directly from Claude Code",
+      "author": {
+        "name": "Jason McCreary"
+      },
+      "license": "MIT",
+      "homepage": "https://github.com/jasonmccreary/ai-skills",
+      "repository": "https://github.com/jasonmccreary/ai-skills",
+      "keywords": ["laravel", "shift", "upgrade", "maintenance", "refactor"]
+    }
+  ]
+}
