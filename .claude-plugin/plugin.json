@@ -1,0 +1,11 @@
+{
+  "name": "laravel-shift",
+  "description": "Analyze, run, and review Shift automation directly from Claude Code",
+  "version": "1.0.0",
+  "author": {
+    "name": "Jason McCreary"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/jasonmccreary/ai-skills",
+  "repository": "https://github.com/jasonmccreary/ai-skills"
+}
