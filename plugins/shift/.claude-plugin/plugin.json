@@ -1,7 +1,8 @@
 {
-  "name": "laravel-shift",
+  "name": "shift",
   "description": "Analyze, run, and review Shift automation directly from Claude Code",
   "version": "1.0.0",
+  "commands": "commands",
   "author": {
     "name": "Jason McCreary"
   },
