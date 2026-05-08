@@ -39,7 +39,7 @@ Run a Shift against this repository via the Shift API. The Shift code is: $ARGUM
 
 ## Steps
 
-1. If no Shift code was provided in `$ARGUMENTS`, ask the user which Shift they'd like to run. Show the code table above as a reference and suggest running `/shift-analyze` first if they're unsure which Shift applies to their project.
+1. If no Shift code was provided in `$ARGUMENTS`, ask the user which Shift they'd like to run. Show the code table above as a reference and suggest running `/shift:analyze` first if they're unsure which Shift applies to their project.
 
 2. Check if `SHIFT_API_TOKEN` is set in the environment. If it's missing, ask the user to provide their Shift API token. Once provided, save it to `.claude/settings.local.json` under the `env` key so it's automatically available in all future sessions:
    ```json
@@ -51,13 +51,13 @@ Run a Shift against this repository via the Shift API. The Shift code is: $ARGUM
    ```
    If `.claude/settings.local.json` already exists, merge the key into the existing `env` object rather than overwriting the file.
 
-3. Determine the GitHub remote and current branch by running:
+3. Determine the remote and current branch by running:
    ```bash
    git remote get-url origin
    git branch --show-current
    git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'
    ```
-   Parse the remote URL to extract `owner/repo` — handle both SSH (`git@github.com:owner/repo.git`) and HTTPS (`https://github.com/owner/repo.git`) formats. Strip any trailing `.git`.
+   Parse the remote URL to extract `owner/repo` — handle both SSH (`git@github.com:owner/repo.git`) and HTTPS (`https://github.com/owner/repo.git`) formats. Strip any trailing `.git`. Also detect the git platform (GitHub or GitLab) from the remote URL hostname, and construct the HTTPS repo URL (e.g. `https://github.com/owner/repo`).
 
    The third command returns the remote default branch (e.g. `main` or `master`). If it produces no output, fall back to treating `main` and `master` as default branch names.
 
@@ -91,10 +91,11 @@ Run a Shift against this repository via the Shift API. The Shift code is: $ARGUM
 
 8. Handle the response based on the HTTP status code:
 
-   - **202** — Success. Parse the response body and extract `shift_number`. Tell the user:
-     > Shift #{shift_number} has been queued. You can monitor its progress at https://laravelshift.com/shifts/{shift_number}
+   - **202** — Success. Parse the response body and extract `shift_number`. Display this message exactly:
 
-     Make the shift number available for use by subsequent commands.
+     > Shift #{shift_number} has been queued. Most Shifts run within a few minutes. You may monitor its progress at: {repo_url}. Once the {pr_term} is open, you may use the `/shift:review {shift_number}` command to automate the review process.
+
+     Where `{repo_url}` is the HTTPS URL to the repository from step 3 and `{pr_term}` is "pull request" for GitHub or "merge request" for GitLab.
 
    - **400** — Bad code. Tell the user the code passed was not recognised by Shift and to double-check the code they provided.
 

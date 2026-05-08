@@ -1,6 +1,6 @@
 # Shift Analyze
 
-Analyze the project and recommend the most relevant Shift to run, following a strict priority order. Read all needed files upfront, then work through each priority in sequence. At the first applicable priority, summarize what was found and suggest running `/shift-run` as the next step — never invoke it automatically.
+Analyze the project and recommend the most relevant Shift to run, following a strict priority order. Read all needed files upfront, then work through each priority in sequence. At the first applicable priority, summarize what was found and suggest running `/shift:run` as the next step — never invoke it automatically.
 
 ## Step 1 — Gather project information
 
@@ -24,7 +24,7 @@ From `composer.json`, find `laravel/framework` under `require`. Extract the majo
   > Your app is on Laravel {current}. The next step is the **Laravel {next}.x Shift**.
   > https://laravelshift.com/upgrade-laravel-{current}-to-laravel-{next}
 
-  Then suggest running `/shift-run` as the next step.
+  Then suggest running `/shift:run` as the next step.
 
 - If Laravel is **13 or higher**, continue to the next priority.
 
@@ -45,7 +45,7 @@ Evaluate both independently; recommend any that apply before moving on.
 - Major **4+**: Tailwind is current — nothing to do.
 - Not present: skip.
 
-If either Livewire or Tailwind needs upgrading, present the applicable recommendation(s) and suggest running `/shift-run` as the next step.
+If either Livewire or Tailwind needs upgrading, present the applicable recommendation(s) and suggest running `/shift:run` as the next step.
 
 ## Step 4 — Priority 3: PHPUnit upgrade
 
@@ -61,7 +61,7 @@ Find `phpunit/phpunit` under `require` or `require-dev` in `composer.json`. If p
 - Major **12+**: PHPUnit is current — nothing to do.
 - Not present: skip.
 
-If PHPUnit needs upgrading, present the recommendation and suggest running `/shift-run` as the next step.
+If PHPUnit needs upgrading, present the recommendation and suggest running `/shift:run` as the next step.
 
 ## Step 5 — Priority 4: Laravel Slimmer
 
@@ -70,14 +70,14 @@ If any of the following files exist, the project still uses the pre-Laravel 11 f
 - `app/Console/Kernel.php`
 - `app/Exceptions/Handler.php`
 
-If so, recommend the **Laravel Slimmer** and suggest running `/shift-run` as the next step:
+If so, recommend the **Laravel Slimmer** and suggest running `/shift:run` as the next step:
 
 > Your app still has a pre-Laravel 11 folder structure. The **Laravel Slimmer** will modernize it.
 > https://laravelshift.com/slim-laravel-application
 
 ## Step 6 — Priority 5: Tests Generator
 
-If no files ending in `Test.php` are found under `tests/` (or `tests/` does not exist), recommend the **Tests Generator** and suggest running `/shift-run` as the next step:
+If no files ending in `Test.php` are found under `tests/` (or `tests/` does not exist), recommend the **Tests Generator** and suggest running `/shift:run` as the next step:
 
 > Your app has no tests. The **Tests Generator** will scaffold model factories and tests to get you started.
 > https://laravelshift.com/laravel-test-generator
@@ -90,11 +90,11 @@ If all previous checks passed, the app is up to date. Offer these options:
 >
 > - **Laravel Fixer** — applies a curated set of modernizations to make your code more idiomatic Laravel ($19)
 >   https://laravelshift.com/laravel-code-fixer
-> - **Individual refactors** — run `/shift-refactor` to apply specific modernizations one at a time.
+> - **Individual refactors** — run `/shift:refactor` to apply specific modernizations one at a time.
 
 ## Shift Codes
 
-When suggesting `/shift-run`, always include the corresponding code from this table.
+When suggesting `/shift:run`, always include the corresponding code from this table.
 
 | Code | Shift |
 |------|-------|
@@ -134,6 +134,6 @@ When suggesting `/shift-run`, always include the corresponding code from this ta
 - Only check `laravel/framework` for the Laravel version — not `laravel/laravel` or any other package.
 - Do not parse versions from `composer.lock` — always use `composer.json`.
 - If `package.json` does not exist, skip all Tailwind checks.
-- Checks are evaluated in strict priority order — at the first applicable check, summarize the finding and suggest `/shift-run` as the next step. Never invoke `/shift-run` automatically.
-- For Livewire and Tailwind (Step 3), both are evaluated together; if both apply, present both before suggesting `/shift-run`.
+- Checks are evaluated in strict priority order — at the first applicable check, summarize the finding and suggest `/shift:run` as the next step. Never invoke `/shift:run` automatically.
+- For Livewire and Tailwind (Step 3), both are evaluated together; if both apply, present both before suggesting `/shift:run`.
 - If `phpunit/phpunit` is not in `composer.json`, skip the PHPUnit check.
