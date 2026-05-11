@@ -74,13 +74,13 @@ Run a Shift Workbench task against this repository. The task slug is: $ARGUMENTS
    ```
    If `.claude/settings.local.json` already exists, merge the key into the existing `env` object rather than overwriting the file.
 
-4. Determine the GitHub remote and current branch by running:
+4. Determine the remote and current branch by running:
    ```bash
    git remote get-url origin
    git branch --show-current
    git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'
    ```
-   Parse the remote URL to extract `owner/repo` — handle both SSH (`git@github.com:owner/repo.git`) and HTTPS (`https://github.com/owner/repo.git`) formats. Strip any trailing `.git`.
+   Parse the remote URL to extract `owner/repo` — handle both SSH (`git@github.com:owner/repo.git`) and HTTPS (`https://github.com/owner/repo.git`) formats. Strip any trailing `.git`. Also detect the git platform (GitHub or GitLab) from the remote URL hostname, and construct the HTTPS repo URL (e.g. `https://github.com/owner/repo`).
 
    The third command returns the remote default branch (e.g. `main` or `master`). If it produces no output, fall back to treating `main` and `master` as default branch names.
 
@@ -114,8 +114,11 @@ Run a Shift Workbench task against this repository. The task slug is: $ARGUMENTS
 
 9. Handle the response based on the HTTP status code:
 
-   - **202** — Success. Parse the response body and extract `shift_number`. Tell the user:
-     > Workbench task "{task name}" has been queued as Shift #{shift_number}. You can monitor its progress at https://laravelshift.com/shifts/{shift_number}
+   - **202** — Success. Parse the response body and extract `build_number`. Display this message exactly:
+
+     > Build #{build_number} has been queued. Most Workbench tasks run within a few minutes. You may monitor its progress at: {repo_url}. Once the {pr_term} is open, you may use the `/shift:review {build_number}` command to automate the review process.
+
+     Where `{repo_url}` is the HTTPS URL to the repository from step 4 and `{pr_term}` is "pull request" for GitHub or "merge request" for GitLab.
 
    - **400** — Bad code. Tell the user the slug was not recognised by Shift and to double-check the value.
 
