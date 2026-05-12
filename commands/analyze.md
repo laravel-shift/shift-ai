@@ -1,5 +1,5 @@
 ---
-name: analyze
+name: shift:analyze
 description: Analyze the project and recommend the most relevant Shift to run
 ---
 

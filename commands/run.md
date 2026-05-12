@@ -1,7 +1,7 @@
 ---
-name: run
+name: shift:run
 description: Run a Shift against this repository via the Shift API
-arguments: The Shift code to run (e.g. 13 for Laravel 13.x Shift)
+arguments: <sku>
 ---
 
 # Shift Run
