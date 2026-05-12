@@ -1,5 +1,5 @@
 # Shift - Commands for AI
-A set of Claude Code commands for automating the entire [Shift](https://laravelshift.com) process. Determine what needs to be run, open a PR, and review it for additional automation.
+A set of AI commands for automating the entire [Shift](https://laravelshift.com) process. Determine what Shift needs to be run, open a PR, and review it for additional automation.
 
 ## Installation
 To use these commands, you may add the marketplace and install globally with Claude Code:
