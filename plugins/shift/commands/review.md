@@ -2,6 +2,10 @@
 
 Review and process the pull request created by Laravel Shift #$ARGUMENTS.
 
+## Important: Respect Shift's Changes
+
+**Never revert or undo any changes made by Shift in this PR.** Shift's changes are intentional and authoritative. If you believe a change made by Shift is incorrect or needs to be different, do NOT make any changes — instead, flag it to the user with your findings and let them decide how to proceed.
+
 ## Step 1: Find the PR
 
 Use `gh` CLI to find the PR for this Shift:
@@ -108,7 +112,17 @@ Summarize:
 - Test results
 - Any remaining action items
 
-End with: "If you want to merge this PR, you can run `gh pr merge {PR_NUMBER} --merge --delete-branch` on your command line."
+End with: "Would you like to merge this PR?"
+
+If the user confirms they want to merge:
+1. Check for any uncommitted local changes: `git status --porcelain`
+2. If there are uncommitted changes, offer to commit them:
+   > "You have uncommitted local changes. Would you like me to commit them for you with a summary?"
+   If the user agrees, stage all changes and commit using "Finalize upgrade" as the subject and the summary from Step 10 as the commit body.
+   If the user declines, wait for them to confirm they've committed their changes before proceeding.
+3. Once the working directory is clean, check if the branch has unpushed commits: `git log origin/{BRANCH}..HEAD`
+4. If there are unpushed commits, push them: `git push`
+5. Then proceed with the merge: `gh pr merge {PR_NUMBER} --merge --delete-branch`
 
 If the last PR comment contained Shift links (set aside in Step 6):
 - If the comment contains "you're now running the latest version of Laravel", append:
