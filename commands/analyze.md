@@ -1,3 +1,8 @@
+---
+name: Shift Analyze
+description: Analyze the project and recommend the most relevant Shift to run
+---
+
 # Shift Analyze
 
 Analyze the project and recommend the most relevant Shift to run, following a strict priority order. Read all needed files upfront, then work through each priority in sequence. At the first applicable priority, summarize what was found and suggest running `/shift:run` as the next step — never invoke it automatically.

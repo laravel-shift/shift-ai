@@ -1,3 +1,9 @@
+---
+name: Shift Workbench
+description: Run a Shift Workbench task against this repository
+arguments: The task slug to run (e.g. remove-down-migration)
+---
+
 # Shift Workbench
 
 Run a Shift Workbench task against this repository. The task slug is: $ARGUMENTS
