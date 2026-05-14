@@ -47,7 +47,7 @@ Run a Shift against this repository via the Shift API. The Shift code is: $ARGUM
 
 1. If no Shift code was provided in `$ARGUMENTS`, ask the user which Shift they'd like to run. Show the code table above as a reference and suggest running `/shift:analyze` first if they're unsure which Shift applies to their project.
 
-2. Check if `SHIFT_API_TOKEN` is set in the environment. If it's missing, ask the user to provide their Shift API token. Once provided, save it to `.claude/settings.local.json` under the `env` key so it's automatically available in all future sessions:
+2. Check if `SHIFT_API_TOKEN` is set in the environment. If it's missing, let the user know they may generate an API token at: https://laravelshift.com/account/api-token, then ask them to provide it. Once provided, ask whether they'd like to save it to `~/.claude/settings.json` (recommended — available across all projects) or `.claude/settings.local.json` (this project only). Save it under the `env` key of whichever file they choose:
    ```json
    {
      "env": {
@@ -55,7 +55,7 @@ Run a Shift against this repository via the Shift API. The Shift code is: $ARGUM
      }
    }
    ```
-   If `.claude/settings.local.json` already exists, merge the key into the existing `env` object rather than overwriting the file.
+   If the target file already exists, merge the key into the existing `env` object rather than overwriting the file.
 
 3. Determine the remote and current branch by running:
    ```bash
@@ -103,9 +103,13 @@ Run a Shift against this repository via the Shift API. The Shift code is: $ARGUM
 
      Where `{pr_url}` is the HTTPS URL to the repository's pull requests page (`{repo_url}/pulls` for GitHub, `{repo_url}/-/merge_requests` for GitLab) and `{pr_term}` is "pull request" for GitHub or "merge request" for GitLab.
 
-   - **400** — Bad code. Tell the user the code passed was not recognised by Shift and to double-check the code they provided.
+   - **400** — Bad request. Parse the response body and display the `message` field directly to the user.
 
    - **401** — Invalid token. Tell the user their API token was rejected. Prompt them to re-enter it, then save the new value to `.claude/settings.local.json` under `env.SHIFT_API_TOKEN` (merging into any existing file). Retry the request once with the new token.
+
+   - **402** — Payment required. Parse the response body and extract `shift_number` and `checkout_url`. Display this message exactly:
+
+     > Shift #{shift_number} requires payment. You may complete checkout at: {checkout_url}. Once paid, your Shift will run. Then you may use the `/shift:review {shift_number}` command to automate the review process.
 
    - **403** — Not authorised to run this Shift. Tell the user their account does not have access to run this particular Shift (it may require a purchase or a different plan at laravelshift.com).
 
