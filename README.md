@@ -17,7 +17,7 @@ The `--scope user` flag installs the commands once for your entire system — no
 - `/shift:review` — review and process the Shift PR for additional automation
 - `/shift:refactor` — run a [Shift Workbench](https://laravelshift.com/workbench) task to refactor your code
 
-**Note:** These commands are being beta tested. As such, the `/shift:run` command is currently limited to subscribers of a [Shifty Plan](https://laravelshift.com/shifty-plans). Once tested, these commands will be made available to all Shift users.
-
 ## Requirements
-- [`gh`](https://cli.github.com) — required by the `/shift:review` command to interact with GitHub pull requests
+The `/shift:run` and `/shift:refactor` commands use the [Shift API](https://laravelshift.com/shift-api). As such, they require a Shift API token. You may sign into [Shift](https://laravelshift.com) to generate one.
+
+The `/shift:review` command interacts with Shift changes through Git. If your repository is hosted with GitHub, the [`gh`](https://cli.github.com) utility is required.
