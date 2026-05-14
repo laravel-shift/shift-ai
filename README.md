@@ -5,7 +5,7 @@ A set of AI skills and commands for managing the entire [Shift](https://laravels
 To use these commands, you may add the marketplace and install globally with Claude Code:
 
 ```
-/plugin marketplace add jasonmccreary/ai-skills
+/plugin marketplace add laravel-shift/shift-ai
 /plugin install shift@laravel-shift --scope user
 ```
 
