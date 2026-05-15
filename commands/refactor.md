@@ -86,7 +86,7 @@ Run a Shift Workbench task against this repository. The task slug is: $ARGUMENTS
    git branch --show-current
    git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'
    ```
-   Parse the remote URL to extract `owner/repo` — handle both SSH (`git@github.com:owner/repo.git`) and HTTPS (`https://github.com/owner/repo.git`) formats. Strip any trailing `.git`. Also detect the git platform (GitHub or GitLab) from the remote URL hostname, and construct the HTTPS repo URL (e.g. `https://github.com/owner/repo`).
+   Parse the remote URL to extract `owner/repo` — handle both SSH (`git@github.com:owner/repo.git`) and HTTPS (`https://github.com/owner/repo.git`) formats. Strip any trailing `.git`. Also detect the git platform (GitHub, GitLab, or Bitbucket) from the remote URL hostname, and construct the HTTPS repo URL (e.g. `https://github.com/owner/repo`).
 
    The third command returns the remote default branch (e.g. `main` or `master`). If it produces no output, fall back to treating `main` and `master` as default branch names.
 
@@ -100,31 +100,25 @@ Run a Shift Workbench task against this repository. The task slug is: $ARGUMENTS
 
    If they want to commit, ask for a commit message, stage all changes (`git add -A`), commit, and push the current branch before proceeding.
 
-6. If the current branch matches the default branch, warn the user and suggest they switch to a dedicated branch before running the task — for example:
+6. Build the `scs` connection string in the format `{platform}:owner/repo:branch`, where `{platform}` is `github`, `gitlab`, or `bitbucket` based on the detected remote.
 
-   > You're on the default branch (`{branch}`). It's recommended to run Workbench tasks against a separate branch so the changes can be reviewed and merged when done. Would you like to continue anyway, or switch to a new branch first?
-
-   If they want to create and switch to a new branch, do so before proceeding.
-
-7. Build the `scs` connection string in the format `github:owner/repo:branch`.
-
-8. Run the task via the API, capturing both the HTTP status code and response body:
+7. Run the task via the API, capturing both the HTTP status code and response body:
    ```bash
    curl -s -o /tmp/shift_response.json -w "%{http_code}" -X POST \
      -H 'Accept: application/json' \
      -d "api_token=$SHIFT_API_TOKEN" \
-     -d "scs=github:owner/repo:branch" \
+     -d "scs={platform}:owner/repo:branch" \
      -d "task={task-slug}" \
      https://laravelshift.com/api/build
    ```
 
-9. Handle the response based on the HTTP status code:
+8. Handle the response based on the HTTP status code:
 
    - **202** — Success. Parse the response body and extract `build_number`. Display this message exactly:
 
-     > Build #{build_number} has been queued. Most Workbench tasks run within a few minutes. You may monitor its progress at: {repo_url}. Once the {pr_term} is open, you may use the `/shift:review {build_number}` command to automate the review process.
+     > Build #{build_number} has been queued. Most Workbench tasks run within a few minutes. You may monitor its progress at: {pr_url}. Once the {pr_term} is open, you may use the `/shift:review {build_number}` command to automate the review process.
 
-     Where `{repo_url}` is the HTTPS URL to the repository from step 4 and `{pr_term}` is "pull request" for GitHub or "merge request" for GitLab.
+     Where `{pr_url}` is the HTTPS URL to the repository's pull requests page (`{repo_url}/pulls` for GitHub, `{repo_url}/-/merge_requests` for GitLab, `{repo_url}/pull-requests` for Bitbucket) and `{pr_term}` is "pull request" for GitHub or Bitbucket, or "merge request" for GitLab.
 
    - **400** — Bad code. Tell the user the slug was not recognised by Shift and to double-check the value.
 
