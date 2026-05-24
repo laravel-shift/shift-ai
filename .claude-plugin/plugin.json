@@ -1,8 +1,8 @@
 {
   "name": "shift",
   "description": "Analyze, run, and review Shift automation directly from Claude Code",
-  "version": "0.7.0",
-  "commands": "./commands",
+  "version": "0.8.0",
+  "skills": "./skills",
   "author": {
     "name": "Jason McCreary"
   },

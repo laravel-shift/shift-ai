@@ -1,6 +1,6 @@
 {
   "name": "laravel-shift",
-  "description": "A set of Claude Code commands for automating the entire Shift process",
+  "description": "A set of Claude Code skills for automating the entire Shift process",
   "owner": {
     "name": "Jason McCreary"
   },
