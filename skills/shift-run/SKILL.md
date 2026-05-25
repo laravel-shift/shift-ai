@@ -12,6 +12,13 @@ Run a Shift against this repository via the Shift API. The Shift code is: $ARGUM
 
 | Code | Shift |
 |------|-------|
+| `CI` | CI Generator |
+| `FL` | Fast Laravel |
+| `HC` | HTML Converter |
+| `10` | Laravel 10.x |
+| `11` | Laravel 11.x |
+| `12` | Laravel 12.x |
+| `13` | Laravel 13.x |
 | `50` | Laravel 5.0 |
 | `51` | Laravel 5.1 |
 | `52` | Laravel 5.2 |
@@ -25,23 +32,32 @@ Run a Shift against this repository via the Shift API. The Shift code is: $ARGUM
 | `70` | Laravel 7.x |
 | `80` | Laravel 8.x |
 | `90` | Laravel 9.x |
-| `10` | Laravel 10.x |
-| `11` | Laravel 11.x |
-| `12` | Laravel 12.x |
-| `13` | Laravel 13.x |
-| `PU6` | PHPUnit 6 |
-| `PU8` | PHPUnit 8 |
-| `PU9` | PHPUnit 9 |
+| `CR` | Laravel Cloud Pre-Check |
+| `LF` | Laravel Fixer |
+| `LL` | Laravel Linter |
+| `LP` | Laravel PreShift |
+| `LS` | Laravel Slimmer |
+| `L3` | Livewire 3.x |
+| `L4` | Livewire 4.x |
+| `LTL` | Lumen to Laravel |
+| `MC` | MFC Converter |
+| `MM` | MySQLi Shift |
+| `NC` | Namespace Consolidator |
+| `NM` | Namespace Models |
+| `PP` | Pest Converter |
 | `PU10` | PHPUnit 10 |
 | `PU11` | PHPUnit 11 |
 | `PU12` | PHPUnit 12 |
-| `L3` | Livewire 3.x |
-| `L4` | Livewire 4.x |
+| `PU6` | PHPUnit 6 |
+| `PU8` | PHPUnit 8 |
+| `PU9` | PHPUnit 9 |
+| `P4` | PSR-4 Shift |
+| `T1` | Tailwind 1.x |
 | `T2` | Tailwind 2.x |
 | `T3` | Tailwind 3.x |
-| `LS` | Laravel Slimmer |
+| `TU` | Tailwind UI |
 | `TG` | Tests Generator |
-| `LF` | Laravel Fixer |
+| `VC` | Vite Converter |
 
 ## Steps
 
